@@ -1,12 +1,16 @@
 const path = require('path');
+const mockIndexData = require("./mock/index.json");
+
 function resolve (dir) {
     return path.join(__dirname, dir)
 }
+
 module.exports = {
-    lintOnSave: true,
-    chainWebpack: (config)=>{
-        config.resolve.alias
-            .set('@', resolve('src'))
-            .set('styles',resolve('src/assets/styles'))
+    devServer: {
+      before: (app) => {
+        app.post('/index', function (req, res) {
+          res.json(mockIndexData)
+        })
+      }
     }
-}
+  }
